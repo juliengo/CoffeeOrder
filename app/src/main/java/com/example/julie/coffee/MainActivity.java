@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,25 +21,64 @@ import java.text.NumberFormat;
  */
 public class MainActivity extends AppCompatActivity {
     int quantityCoffee= 0;
+    int quantityIcedCoffee= 0;
     double coffeePrice= 2.5;
+    double icedCoffeePrice= 2.85;
     double totalPrice= 0;
+
     boolean promoCodeUsed = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        findViewById(R.id.incCoffee).setOnClickListener(GlobalOnClick);
+        findViewById(R.id.decCoffee).setOnClickListener(GlobalOnClick);
+        findViewById(R.id.incIcedCoffee).setOnClickListener(GlobalOnClick);
+        findViewById(R.id.decIcedCoffee).setOnClickListener(GlobalOnClick);
     }
 
-    // displays toast when checkbox is clicked
+    //Global on Click listener for all buttons
+        final View.OnClickListener GlobalOnClick= new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.incCoffee:
+                    quantityCoffee++;
+                    break;
+                case R.id.decCoffee:
+                    if (quantityCoffee >0) {
+                    quantityCoffee--;
+                } else
+                    {makeToast ();}
+                    break;
+                case R.id.incIcedCoffee:
+                    quantityIcedCoffee++;
+                    break;
+                case R.id.decIcedCoffee:
+                    if (quantityIcedCoffee >0) {
+                        quantityIcedCoffee--;
+                    } else
+                    {makeToast ();}
+                    break;
+            }
+
+            totalPrice= quantityCoffee*coffeePrice + quantityIcedCoffee*icedCoffeePrice;
+            display(quantityCoffee);
+            displayIcedCoffee(quantityIcedCoffee);
+            displayPrice(totalPrice);
+        }
+    };
+
+
+    // displays toast for promo code
     public void displayToast (String string){
         Context context = getApplicationContext();
         CharSequence text = string;
         String promoCode= "Julie";
         int duration = Toast.LENGTH_SHORT;
         if (text.equals(promoCode)){
-            text = "correct; discount applied";
+            text = "Discount applied";
         }else{
             text= "Incorrect promo code";
 
@@ -53,26 +93,14 @@ public class MainActivity extends AppCompatActivity {
         toast2.show();*/
     }
 
+    //makes toast for decrement method
+    public void makeToast(){
+        Toast.makeText(this, "You cannot have less than 0 cups!", Toast.LENGTH_SHORT).show();
 
-    public void incrementCoffee (View view){
-        quantityCoffee++;
-        totalPrice =quantityCoffee*coffeePrice;
-        display(quantityCoffee);
-        displayPrice(totalPrice);
     }
 
-    public void decrementCoffee (View view){
-        if (quantityCoffee==0)
 
-        {
-            Toast.makeText(this, "You cannot have less than 0 cups!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        quantityCoffee--;
-        totalPrice =quantityCoffee*coffeePrice;
-        display(quantityCoffee);
-        displayPrice(totalPrice);
-    }
+
 
     /**
      * This method is called when the order button is clicked.
@@ -106,9 +134,12 @@ public class MainActivity extends AppCompatActivity {
     private void displayMessage(String message){
         TextView priceTextView= (TextView) findViewById(R.id.price_text_view);
         priceTextView.setText(message);
-
-
     }
+
+    private void displayIcedCoffee(int number) {
+        TextView quantityTextView = (TextView) findViewById(R.id.quantity_text_view2);
+        quantityTextView.setText("" + number);}
+
     private void display(int number) {
         TextView quantityTextView = (TextView) findViewById(R.id.quantity_text_view);
         quantityTextView.setText("" + number);

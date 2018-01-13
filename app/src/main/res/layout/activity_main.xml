@@ -116,7 +116,7 @@
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
-                        android:onClick="decrementCoffee"
+                        android:id="@+id/decCoffee"
                         android:text="-" />
 
                     <TextView
@@ -134,8 +134,8 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="40dp"
-                        android:onClick="incrementCoffee"
-                        android:text="+" />
+                        android:text="+"
+                        android:id="@+id/incCoffee"/>
 
 
                 </LinearLayout>
@@ -170,7 +170,7 @@
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
-                        android:onClick="decrement"
+                        android:id="@+id/decIcedCoffee"
                         android:text="-" />
 
                     <TextView
@@ -188,7 +188,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="40dp"
-                        android:onClick="increment"
+                        android:id="@+id/incIcedCoffee"
                         android:text="+" />
 
 
@@ -255,7 +255,7 @@
                 android:textAllCaps="true"/>
         </LinearLayout>
         <EditText
-            android:layout_width="200dp"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:hint="enter promo code"
             android:maxLines="1"
